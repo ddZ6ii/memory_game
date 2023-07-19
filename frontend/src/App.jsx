@@ -1,24 +1,29 @@
 import { Routes, Route } from "react-router-dom";
 
-import Navbar from "./components/utilities/Navbar";
+import useThemeContext from "./hooks/useThemeContext";
+
+import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import Footer from "./components/utilities/Footer";
+import Game from "./pages/Game";
 import NotFound from "./pages/NotFound";
 
 export default function App() {
+  const { isDarkMode } = useThemeContext();
+
   return (
-    <div className="min-h-screen bg-gradientDarkTheme">
+    <div
+      className={`min-h-screen ${isDarkMode ? "theme__dark" : "theme__light"}`}
+    >
       <Navbar />
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* <Route path="game" element={<Game />} /> */}
+          <Route path="game" element={<Game />} />
           {/* <Route path="connection" element={<Connection />} />
           <Route path="scores" element={<Scores />} />
           <Route path="about" element={<About />} /> */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <Footer />
       </main>
     </div>
   );

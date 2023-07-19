@@ -45,7 +45,7 @@ const verifyPassword = async (req, res, next) => {
     if (!isUserVerified)
       return res
         .status(401)
-        .send("Your email and password do not match. Please try again.");
+        .send("Your email and password did not match. Please try again...");
 
     return next();
   } catch (err) {
