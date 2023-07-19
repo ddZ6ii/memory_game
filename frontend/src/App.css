@@ -27,56 +27,22 @@
 }
 
 :root {
-  --color-accent-default: theme("colors.accent.default")
-  --color-accent-purple: theme("colors.accent.purple")
-  --color-accent-cyan: theme("colors.accent.cyan")
-  --color-accent-pink: theme("colors.accent.pink")
-  --color-neutral-default: theme("colors.neutral.default")
-  --color-neutral-darkest: theme("colors.neutral.darkest")
-  --color-neutral-dark: theme("colors.neutral.dark")
-  --color-neutral-light: theme("colors.neutral.light")
-  --color-neutral-lightest: theme("colors.neutral.lightest")
-  --color-status-success: theme("colors.status.success")
-  --color-status-success-light: theme("colors.status.successLight")
-  --color-status-error: theme("colors.status.error")
-  --color-status-error-dark: theme("colors.status.errorDark")
-  --color-status-error-light: theme("colors.status.errorLight")
-
-  /* theme toggle switch */
-  /* --switch-width: 56px;
-  --switch-height: 24px;
-  --slider-space: 1px;
-  --icon-space: 1px;
-  --slider-height: calc(var(--switch-height) - calc(2 * var(--slider-space)));
-  --slider-width: var(--slider-height);
-  --slider-course: calc(
-    calc(var(--switch-width) - var(--slider-width)) - 2 * var(--slider-space)
-  );
-  --icon-height: calc(var(--slider-height) - 2 * var(--icon-space));
-  --icon-width: var(--icon-height); */
+  --color-accent-default: theme("colors.accent.default");
+  --color-accent-purple: theme("colors.accent.purple");
+  --color-accent-cyan: theme("colors.accent.cyan");
+  --color-accent-pink: theme("colors.accent.pink");
+  --color-neutral-default: theme("colors.neutral.default");
+  --color-neutral-darkest: theme("colors.neutral.darkest");
+  --color-neutral-dark: theme("colors.neutral.dark");
+  --color-neutral-light: theme("colors.neutral.light");
+  --color-neutral-lightest: theme("colors.neutral.lightest");
+  --color-status-success: theme("colors.status.success");
+  --color-status-success-light: theme("colors.status.successLight");
+  --color-status-error: theme("colors.status.error");
+  --color-status-error-dark: theme("colors.status.errorDark");
+  --color-status-error-light: theme("colors.status.errorLight");
 }
 
-/* ______________________________________________________________________ *\
-   Utilities
-\* ______________________________________________________________________ */
-.themeDark {
-  color: var(--color-neutral-lightest);
-  background-color: var(--color-neutral-darkest);
-}
-
-.themeLight {
-  color: var(--color-neutral-darkest);
-  background-color: var(--color-neutral-lightest);
-}
-
-/* .btn-default {
-  @apply flex items-center justify-center gap-3 rounded-full
-  border border-transparent px-7 py-2 text-center font-header text-xs font-extrabold text-neutral-darkest;
-}
-
-.btn-default:hover {
-  @apply border-accent-default bg-neutral-lightest bg-none text-neutral-darkest;
-} */
 /* ______________________________________________________________________ *\
    Base
 \* ______________________________________________________________________ */
@@ -87,7 +53,7 @@
     font-size: theme("fontSize.base");
   }
 
-  /* section {
+  section {
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -97,39 +63,37 @@
     display: flex;
     flex-direction: column;
     gap: 32px;
+  }
 
-    @media screen and (min-width: theme("screens.md")) {
-      padding-top: 32px;
-    }
+  h1,
+  h2,
+  h3 {
+    font-family: theme("fontFamily.header");
+  }
 
-    @media screen and (min-width: theme("screens.xl")) {
-      margin-inline: clamp(192px, 7.5vw, 288px);
-    }
-
-    @media screen and (min-width: theme("screens.2xl")) {
-      margin-inline: clamp(288px, 20vw, 576px);
-    }
-  } */
-
-  /* article {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    @media screen and (min-width: theme("screens.md")) {
-      gap: 16px;
-    }
-  } */
+  h1,
+  h3 {
+    font-weight: theme("fontWeight.bold");
+  }
 
   h1 {
     font-size: theme("fontSize.xl");
-    font-family: theme("fontFamily.header");
-    font-weight: theme("fontWeight.extrabold");
     @media screen and (min-width: theme("screens.md")) {
       font-size: theme("fontSize.2xl");
     }
   }
 
-  p, a {
+  h2 {
+    font-size: theme("fontSize.lg");
+    @media screen and (min-width: theme("screens.md")) {
+      font-size: theme("fontSize.xl");
+    }
+  }
+
+  p,
+  label,
+  input,
+  button {
     font-size: theme("fontSize.sm");
     font-family: theme("fontFamily.sans");
     font-weight: theme("fontWeight.normal");
@@ -138,13 +102,143 @@
     }
   }
 
- label, input {
-    font-size: inherit;
-    font-family: inherit;
-    font-weight: inherit;
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
+
+  label,
+  input {
+    padding: 8px 16px;
+  }
+
+  input {
+    border: 1px solid var(--color-neutral-default);
+    border-radius: 100px;
+  }
+}
+
+/* ______________________________________________________________________ *\
+   Utilities
+\* ______________________________________________________________________ */
+.btn {
+  padding: 0.6rem 2rem;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 100px;
+  text-align: center;
+}
+
+/* ______________________________________________________________________ *\
+   Theme
+\* ______________________________________________________________________ */
+.theme__dark {
+  color: var(--color-neutral-lightest);
+  background-color: var(--color-neutral-darkest);
+}
+
+.theme__light {
+  color: var(--color-neutral-darkest);
+  background-color: var(--color-neutral-lightest);
+}
+
+.btn__secondary__default {
+  color: var(--color-neutral-darkest);
+  background-color: var(--color-neutral-default);
+}
+
+.btn__primary__default {
+  color: var(--color-neutral-lightest);
+  background-color: var(--color-accent-default);
+}
+
+.primary__default {
+  color: var(--color-accent-default);
 }
 
 /* ______________________________________________________________________ *\
    Components
 \* ______________________________________________________________________ */
+.navbar {
+  position: fixed;
+  top: 16px;
+
+  padding: 2px 24px;
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @apply backdrop-blur-[2px];
+  z-index: 20;
+}
+
+.navlist {
+  position: fixed;
+  top: -16px;
+  right: 0;
+  padding-top: 16px;
+
+  min-height: 100dvh;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+
+  color: var(--color-neutral-lightest);
+  @apply bg-neutral-darkest/[99%] backdrop-blur;
+
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.navlist__isOpen {
+  transform: translateX(0%);
+}
+
+.navitem {
+  min-width: 144px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: theme("fontSize.lg");
+}
+
+.navitem__isActive {
+  text-decoration: underline 1px;
+  text-underline-offset: 8px;
+}
+
+.navitem__isActive svg > :nth-child(2) {
+  fill: theme("colors.accent.default");
+}
+
+/* .navitem__logout {
+  padding: 8px 16px;
+
+  border-radius: 100px;
+  border: 1px solid theme("colors.neutralLightest");
+
+  color: theme("colors.neutralLightest");
+  font-family: theme("fontFamily.header");
+  font-size: theme("fontSize.lg");
+} */
+
+.navbar__btn {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 20;
+}

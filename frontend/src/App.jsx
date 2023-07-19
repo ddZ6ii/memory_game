@@ -1,13 +1,12 @@
 import { Routes, Route } from "react-router-dom";
 
-import Navbar from "./components/utilities/Navbar";
+import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import Footer from "./components/utilities/Footer";
 import NotFound from "./pages/NotFound";
 
 export default function App() {
   return (
-    <div className="min-h-screen">
+    <div className="theme__light min-h-screen">
       <Navbar />
       <main>
         <Routes>
@@ -18,7 +17,6 @@ export default function App() {
           <Route path="about" element={<About />} /> */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <Footer />
       </main>
     </div>
   );
