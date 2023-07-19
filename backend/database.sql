@@ -76,7 +76,7 @@ VALUES
 -- Populate user
 INSERT INTO `user` (`pseudo`, `email`, `password`, `preference_id`, `role_id`) 
 VALUES
-('biquet', 'biquet@gmail.com', 'biquet', 1, 1);
+('biquet', 'biquet@gmail.com', '$argon2id$v=19$m=19893.36898592844,t=2,p=1$Ut9+nRPpva3yBxWNtLYZZw$kp1hHPSeGNKOQwRhtzD6w6eu8KqccIlQyvu8WT98u/I', 1, 1);
 
 -- Populate user_game
 INSERT INTO `user_game` (`time`, `move`, `score`, `user_id`, `game_id`) 

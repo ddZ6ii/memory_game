@@ -1,7 +1,7 @@
 const express = require("express");
 
 const userController = require("../controllers/userController");
-const validateUserInfo = require("../middlewares/validators/userValidator");
+const validateUserInfo = require("../middlewares/userValidator");
 const {
   verifyEmail,
   checkForExistingAccount,
@@ -10,9 +10,6 @@ const {
 
 const router = express.Router();
 
-/**
- * TODO: add authentication wall...
- */
 router.get("/", userController.getAll);
 router.get("/:id", userController.getById);
 router.post(
