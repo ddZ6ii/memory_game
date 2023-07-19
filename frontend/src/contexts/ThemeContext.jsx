@@ -12,19 +12,19 @@ const ThemeContext = createContext();
 function ThemeContextProvider({ children }) {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  const LOCAL_STORAGE_KEY = "isDarkMode";
+
   const handleChangeDarkMode = useCallback((bool) => {
-    // write new value to local storage
-    localStorage.setItem("isDarkMode", JSON.stringify(bool));
-    // toggle theme context value
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(bool));
     setIsDarkMode(bool);
   }, []);
 
+  // retrieve user's preference from local storage (if any)
   useEffect(() => {
-    // get user's preference from local storage (if any)
-    const hasUserSavedTheme = localStorage.getItem("isDarkMode");
+    const storedMode = localStorage.getItem(LOCAL_STORAGE_KEY);
     // set initial light/dark theme based on either user's saved preference (if any) or browser preference
-    if (hasUserSavedTheme) {
-      setIsDarkMode(JSON.parse(hasUserSavedTheme) === true);
+    if (storedMode) {
+      setIsDarkMode(JSON.parse(storedMode) === true);
     } else {
       setIsDarkMode(window.matchMedia("(prefers-color-scheme: dark)").matches);
     }

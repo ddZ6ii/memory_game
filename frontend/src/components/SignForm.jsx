@@ -3,69 +3,71 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 import useThemeContext from "../hooks/useThemeContext";
+import useAuthContext from "../hooks/useAuthContext";
+
+import capitalizeText from "../helpers/capitalize";
+import * as Auth from "../services/auth";
 
 import TOAST_DEFAULT_CONFIG from "../data/toastConfig.json";
 
 export default function SignForm() {
   const navigate = useNavigate();
   const { isDarkMode } = useThemeContext();
+  const { handleChangeAccount } = useAuthContext();
   const [isLogin, setIsLogin] = useState(true);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (isLogin) {
-        // const user = {
-        //   email: e.target.email.value,
-        //   password: e.target.password.value,
-        // };
-        // // request sign-in from database
-        //     const { data: user } = await loginUser(user);
-        //     // update local storage (prevent page refresh)
-        //     setUserToLocalStorage(user);
-        //     // update user context
-        //     setAccount(user);
-        // re-direct to Game page
-        // if (res?.status === 201) {
-        //   toast.success(`Welcome back!`, {
-        //     ...TOAST_DEFAULT_CONFIG,
-        //     autoClose: 2000,
-        //   });
+        // proceed to sign-in (check if account already exists)
+        const credendtials = {
+          email: e.target.email.value,
+          password: e.target.password.value,
+        };
+        const { data: user } = await Auth.login(credendtials);
+
+        if (Object.keys(user).length) {
+          toast.success(`Welcome back ${capitalizeText(user.pseudo)}!`, {
+            ...TOAST_DEFAULT_CONFIG,
+            autoClose: 2000,
+          });
+          // update both user context and local storage
+          handleChangeAccount(user);
+          // re-direct to Game page
+          setTimeout(() => {
+            navigate("game");
+          }, 2000);
+        }
       }
-      setTimeout(() => {
-        navigate("game");
-      }, 2000);
 
       if (!isLogin) {
-        // check both password are matching
         const password = e.target.password.value;
         const confirmationPassword = e.target.confirmPassword.value;
-
         if (password !== confirmationPassword) {
           toast.warn(`Passwords do not match!`, TOAST_DEFAULT_CONFIG);
         } else {
           // register new user to database
-          // const user = {
-          //   pseudo: e.target.pseudo.value,
-          //   email: e.target.email.value,
-          //   password: e.target.password.value,
-          // };
-          // const res = await registerUser(user);
+          const user = {
+            pseudo: e.target.pseudo.value,
+            email: e.target.email.value,
+            password: e.target.password.value,
+          };
+          const res = await Auth.register(user);
 
           // account with same email already existing
-          // if (res?.status === 200) {
-          //   toast.warning(`${res.data}...`, TOAST_DEFAULT_CONFIG);
-          // }
+          if (res?.status === 200) {
+            toast.warning(`${res.data}...`, TOAST_DEFAULT_CONFIG);
+          }
 
           // signin succeeded, invite to sign-in
-          // if (res?.status === 201) {
-          //   toast.success("Account created. Welcome to Memory Challenge!", {
-          //     ...TOAST_DEFAULT_CONFIG,
-          //     autoClose: 2000,
-          //   });
-          setTimeout(() => {
-            setIsLogin(false);
-          }, 2000);
+          if (res?.status === 201) {
+            toast.success("Account created. Welcome to Memory Challenge!", {
+              ...TOAST_DEFAULT_CONFIG,
+              autoClose: 2000,
+            });
+            setIsLogin(true);
+          }
         }
       }
     } catch (err) {

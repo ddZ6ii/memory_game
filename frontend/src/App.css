@@ -135,6 +135,7 @@
   input {
     border: 1px solid var(--color-neutral-default);
     border-radius: 100px;
+    color: var(--color-neutral-darkest);
   }
 }
 

@@ -1,16 +1,16 @@
 import { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
 
-const useUserContext = () => {
+const userThemeContext = () => {
   // get the context
   const context = useContext(ThemeContext);
 
   // if `undefined`, throw an error
   if (context === undefined) {
-    throw new Error("useUserContext was used outside of its Provider!");
+    throw new Error("userThemeContext was used outside of its Provider!");
   }
 
   return context;
 };
 
-export default useUserContext;
+export default userThemeContext;
