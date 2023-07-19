@@ -27,6 +27,7 @@ module.exports = {
           errorDark: "#EA3829",
           errorLight: "#FFEBE7",
         },
+        overlay: "#111",
       },
 
       fontFamily: {

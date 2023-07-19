@@ -1,9 +1,17 @@
 import PropTypes from "prop-types";
 
+import useThemeContext from "../hooks/useThemeContext";
+
 export default function SignForm({ isLogin, toggleSignIn }) {
+  const { isDarkMode } = useThemeContext();
   return (
     <form className="relative flex flex-col gap-2 rounded-lg border px-2 py-4">
-      <h3 className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 bg-neutral-lightest px-2 py-2">
+      {/* <h3 className="absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 bg-neutral-lightest px-2 py-2"> */}
+      <h3
+        className={`absolute left-1/2 top-0 z-10 -translate-x-1/2 -translate-y-1/2 px-2 py-2 ${
+          isDarkMode ? "bg-neutral-darkest" : "bg-neutral-lightest "
+        }`}
+      >
         {isLogin ? "Log In" : "Sign Up"}
       </h3>
 

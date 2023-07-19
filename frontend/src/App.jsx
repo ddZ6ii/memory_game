@@ -1,12 +1,19 @@
 import { Routes, Route } from "react-router-dom";
+import useThemeContext from "./hooks/useThemeContext";
 
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 
 export default function App() {
+  const { isDarkMode } = useThemeContext();
+
+  console.log("App is dark mode?", isDarkMode);
+
   return (
-    <div className="theme__light min-h-screen">
+    <div
+      className={`min-h-screen ${isDarkMode ? "theme__dark" : "theme__light"}`}
+    >
       <Navbar />
       <main>
         <Routes>
