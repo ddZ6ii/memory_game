@@ -29,7 +29,6 @@
 /* ______________________________________________________________________ *\
    Global Variables
 \* ______________________________________________________________________ */
-
 :root {
   /* theme */
   --color-accent-default: theme("colors.accent.default");
@@ -47,6 +46,11 @@
   --color-status-error-dark: theme("colors.status.errorDark");
   --color-status-error-light: theme("colors.status.errorLight");
   --color-overlay: theme("colors.overlay");
+
+   /* section */
+   --min-margin: 58px;
+   --margin: 7.5vw,
+   --max-margin: 288px;
 
   /* light/dark mode toggle switch */
   --switch-width: 56px;
@@ -73,15 +77,20 @@
   }
 
   section {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
     padding: 80px 0 32px 0;
     margin-inline: clamp(24px, 7.5vw, 192px);
 
     display: flex;
     flex-direction: column;
     gap: 32px;
+
+    @media screen and (min-width: theme("screens.md")) {
+      margin-inline: clamp(64px, 7.5vw, 320px);
+    } 
+
+    @media screen and (min-width: theme("screens.xl")) {
+      margin-inline: clamp(96px, 20vw, 576px);
+    }
   }
 
   h1,
@@ -106,6 +115,13 @@
     font-size: theme("fontSize.lg");
     @media screen and (min-width: theme("screens.md")) {
       font-size: theme("fontSize.xl");
+    }
+  }
+
+  h3 {
+    font-size: theme("fontSize.base");
+    @media screen and (min-width: theme("screens.md")) {
+      font-size: theme("fontSize.lg");
     }
   }
 
@@ -187,7 +203,8 @@
   position: fixed;
   top: 16px;
 
-  padding: 2px 24px;
+  padding-inline: clamp(24px, 7.5vw, 192px);
+
   width: 100%;
 
   display: flex;
@@ -196,6 +213,14 @@
 
   @apply backdrop-blur-[2px];
   z-index: 20;
+
+  @media screen and (min-width: theme("screens.md")) {
+    padding-inline: clamp(64px, 7.5vw, 320px);
+  }
+  
+  @media screen and (min-width: theme("screens.xl")) {
+    padding-inline: clamp(96px, 20vw, 576px);
+  }
 }
 
 .navlist {

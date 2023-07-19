@@ -79,7 +79,7 @@ export default function SignForm() {
 
   return (
     <form
-      className="relative flex flex-col gap-2 rounded-lg border px-2 py-4"
+      className="relative flex w-full max-w-2xl flex-col gap-2 self-center rounded-lg border px-2 py-4"
       onSubmit={handleSubmit}
     >
       <h3

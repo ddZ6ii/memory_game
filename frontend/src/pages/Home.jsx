@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 export default function Home() {
   return (
     <>
-      <section className="min-h-[calc(100dvh-40px)]">
+      <section className="min-h-[calc(100dvh-40px)] md:min-h-[calc(100dvh-48px)]">
         <h1>Memory Challenge</h1>
 
         <h2>
