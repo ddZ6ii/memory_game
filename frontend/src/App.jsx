@@ -3,6 +3,7 @@ import useThemeContext from "./hooks/useThemeContext";
 
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
+import Game from "./pages/Game";
 import NotFound from "./pages/NotFound";
 
 export default function App() {
@@ -16,7 +17,7 @@ export default function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* <Route path="game" element={<Game />} /> */}
+          <Route path="game" element={<Game />} />
           {/* <Route path="connection" element={<Connection />} />
           <Route path="scores" element={<Scores />} />
           <Route path="about" element={<About />} /> */}
