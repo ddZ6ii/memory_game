@@ -6,43 +6,88 @@
    Import Local Fonts
 \* ______________________________________________________________________ */
 @font-face {
-  font-family: "Gilroy";
-  font-weight: 800;
-  src: local("Gilroy-ExtraBold"),
-    url("../public/assets/font/Gilroy-ExtraBold.otf") format("opentype");
+  font-family: "Poppins";
+  font-weight: 900;
+  src: local("Poppins-Black"),
+    url("../public/assets/font/Poppins-Black.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "Gilroy";
+  font-family: "Poppins";
+  font-weight: 400;
+  src: local("Poppins-Regular"),
+    url("../public/assets/font/Poppins-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
   font-weight: 300;
-  src: local("Gilroy-Light"),
-    url("../public/assets/font/Gilroy-Light.otf") format("opentype");
+  src: local("Poppins-Light"),
+    url("../public/assets/font/Poppins-Light.ttf") format("truetype");
+}
+
+:root {
+  --color-accent-default: theme("colors.accent.default")
+  --color-accent-purple: theme("colors.accent.purple")
+  --color-accent-cyan: theme("colors.accent.cyan")
+  --color-accent-pink: theme("colors.accent.pink")
+  --color-neutral-default: theme("colors.neutral.default")
+  --color-neutral-darkest: theme("colors.neutral.darkest")
+  --color-neutral-dark: theme("colors.neutral.dark")
+  --color-neutral-light: theme("colors.neutral.light")
+  --color-neutral-lightest: theme("colors.neutral.lightest")
+  --color-status-success: theme("colors.status.success")
+  --color-status-success-light: theme("colors.status.successLight")
+  --color-status-error: theme("colors.status.error")
+  --color-status-error-dark: theme("colors.status.errorDark")
+  --color-status-error-light: theme("colors.status.errorLight")
+
+  /* theme toggle switch */
+  /* --switch-width: 56px;
+  --switch-height: 24px;
+  --slider-space: 1px;
+  --icon-space: 1px;
+  --slider-height: calc(var(--switch-height) - calc(2 * var(--slider-space)));
+  --slider-width: var(--slider-height);
+  --slider-course: calc(
+    calc(var(--switch-width) - var(--slider-width)) - 2 * var(--slider-space)
+  );
+  --icon-height: calc(var(--slider-height) - 2 * var(--icon-space));
+  --icon-width: var(--icon-height); */
 }
 
 /* ______________________________________________________________________ *\
    Utilities
 \* ______________________________________________________________________ */
-.btn-default {
+.themeDark {
+  color: var(--color-neutral-lightest);
+  background-color: var(--color-neutral-darkest);
+}
+
+.themeLight {
+  color: var(--color-neutral-darkest);
+  background-color: var(--color-neutral-lightest);
+}
+
+/* .btn-default {
   @apply flex items-center justify-center gap-3 rounded-full
-  border border-transparent bg-gradient-to-b from-[#4E5DB6]/95 to-[#9969C4]
-  px-7 py-2 text-center font-header text-xs font-extrabold text-neutralLightest;
+  border border-transparent px-7 py-2 text-center font-header text-xs font-extrabold text-neutral-darkest;
 }
 
 .btn-default:hover {
-  @apply border-primaryLight bg-neutralLightest bg-none text-primaryLight;
-}
-
+  @apply border-accent-default bg-neutral-lightest bg-none text-neutral-darkest;
+} */
 /* ______________________________________________________________________ *\
    Base
 \* ______________________________________________________________________ */
 @layer base {
   body {
-    color: theme("colors.neutralLightest");
+    color: var(--color-neutral-darkest);
     font-family: theme("fontFamily.sans");
     font-size: theme("fontSize.base");
   }
 
-  section {
+  /* section {
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -64,26 +109,39 @@
     @media screen and (min-width: theme("screens.2xl")) {
       margin-inline: clamp(288px, 20vw, 576px);
     }
-  }
+  } */
 
-  article {
+  /* article {
     display: flex;
     flex-direction: column;
     gap: 12px;
     @media screen and (min-width: theme("screens.md")) {
       gap: 16px;
     }
-  }
+  } */
 
   h1 {
     font-size: theme("fontSize.xl");
     font-family: theme("fontFamily.header");
     font-weight: theme("fontWeight.extrabold");
-    text-transform: uppercase;
+    @media screen and (min-width: theme("screens.md")) {
+      font-size: theme("fontSize.2xl");
+    }
   }
 
-  p {
-    @apply font-sans text-sm md:text-base;
+  p, a {
+    font-size: theme("fontSize.sm");
+    font-family: theme("fontFamily.sans");
+    font-weight: theme("fontWeight.normal");
+    @media screen and (min-width: theme("screens.md")) {
+      font-size: theme("fontSize.base");
+    }
+  }
+
+ label, input {
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
   }
 }
 

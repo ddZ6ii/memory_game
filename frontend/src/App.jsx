@@ -7,7 +7,7 @@ import NotFound from "./pages/NotFound";
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-gradientDarkTheme">
+    <div className="min-h-screen">
       <Navbar />
       <main>
         <Routes>
