@@ -47,11 +47,6 @@
   --color-status-error-light: theme("colors.status.errorLight");
   --color-overlay: theme("colors.overlay");
 
-   /* section */
-   --min-margin: 58px;
-   --margin: 7.5vw,
-   --max-margin: 288px;
-
   /* light/dark mode toggle switch */
   --switch-width: 56px;
   --switch-height: 24px;
@@ -86,7 +81,7 @@
 
     @media screen and (min-width: theme("screens.md")) {
       margin-inline: clamp(64px, 7.5vw, 320px);
-    } 
+    }
 
     @media screen and (min-width: theme("screens.xl")) {
       margin-inline: clamp(96px, 20vw, 576px);
@@ -217,7 +212,7 @@
   @media screen and (min-width: theme("screens.md")) {
     padding-inline: clamp(64px, 7.5vw, 320px);
   }
-  
+
   @media screen and (min-width: theme("screens.xl")) {
     padding-inline: clamp(96px, 20vw, 576px);
   }
