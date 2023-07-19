@@ -8,8 +8,6 @@ import NotFound from "./pages/NotFound";
 export default function App() {
   const { isDarkMode } = useThemeContext();
 
-  console.log("App is dark mode?", isDarkMode);
-
   return (
     <div
       className={`min-h-screen ${isDarkMode ? "theme__dark" : "theme__light"}`}

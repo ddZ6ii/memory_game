@@ -22,8 +22,6 @@ function ThemeContextProvider({ children }) {
   useEffect(() => {
     // get user's preference from local storage (if any)
     const hasUserSavedTheme = localStorage.getItem("isDarkMode");
-    console.log("ContextProvider re-rendered");
-
     // set initial light/dark theme based on either user's saved preference (if any) or browser preference
     if (hasUserSavedTheme) {
       setIsDarkMode(JSON.parse(hasUserSavedTheme) === true);

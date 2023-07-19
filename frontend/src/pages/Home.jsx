@@ -8,7 +8,8 @@ export default function Home() {
   const toggleSignIn = () => setIsLogin((prev) => !prev);
   return (
     <>
-      <section className="">
+      {/* <section className="min-h-[calc(100dvh-80px)]"> */}
+      <section className="min-h-[calc(100dvh-40px)]">
         <h1>Memory Challenge</h1>
 
         <h2>
