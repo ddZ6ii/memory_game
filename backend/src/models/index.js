@@ -29,9 +29,17 @@ pool.getConnection().catch(() => {
 const models = {};
 
 const UserManager = require("./UserManager");
+const GameManager = require("./GameManager");
+const UserGameManager = require("./UserGameManager");
 
 models.user = new UserManager();
 models.user.setDatabase(pool);
+
+models.game = new GameManager();
+models.game.setDatabase(pool);
+
+models.userGame = new UserGameManager();
+models.userGame.setDatabase(pool);
 
 // bonus: use a proxy to personalize error message,
 // when asking for a non existing model

@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "type": "numbers",
+    "value": 1,
+    "title": "Try to match pairs of numbers"
+  },
+  {
+    "id": 2,
+    "type": "icons",
+    "value": 2,
+    "title": "Try to match pairs of icons"
+  }
+]

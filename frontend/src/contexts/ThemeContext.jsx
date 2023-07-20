@@ -1,14 +1,26 @@
 import PropTypes from "prop-types";
 import {
   createContext,
+  useContext,
   useState,
   useEffect,
   useCallback,
   useMemo,
 } from "react";
 
+// Create context
 const ThemeContext = createContext();
 
+// Consumer custom Hook
+const useThemeContext = () => {
+  const context = useContext(ThemeContext);
+  if (context === undefined) {
+    throw new Error("userThemeContext was used outside of its Provider!");
+  }
+  return context;
+};
+
+// Context provider
 function ThemeContextProvider({ children }) {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -46,7 +58,7 @@ function ThemeContextProvider({ children }) {
   );
 }
 
-export { ThemeContext, ThemeContextProvider };
+export { ThemeContext, useThemeContext, ThemeContextProvider };
 
 ThemeContextProvider.propTypes = {
   children: PropTypes.oneOfType([

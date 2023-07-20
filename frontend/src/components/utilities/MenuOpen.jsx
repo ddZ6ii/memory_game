@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-export default function MenuOpen({ isDarkMode }) {
+export default function MenuOpen({ isDarkMode, customStyle }) {
   return (
     <svg
       width="34"
@@ -8,6 +8,7 @@ export default function MenuOpen({ isDarkMode }) {
       viewBox="0 0 34 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={customStyle}
     >
       <path
         d="M2 12H32M2 2H32M12 22H32"
@@ -24,4 +25,9 @@ export default function MenuOpen({ isDarkMode }) {
 
 MenuOpen.propTypes = {
   isDarkMode: PropTypes.bool.isRequired,
+  customStyle: PropTypes.string,
+};
+
+MenuOpen.defaultProps = {
+  customStyle: "",
 };

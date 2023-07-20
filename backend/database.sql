@@ -37,9 +37,9 @@ CREATE TABLE `user` (
 DROP TABLE IF EXISTS `user_game`;
 CREATE TABLE `user_game` (
     `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    `time` INT UNSIGNED NOT NULL,
-    `move` INT UNSIGNED NOT NULL,
-    `score` INT UNSIGNED NOT NULL,
+    `time` INT UNSIGNED DEFAULT NULL,
+    `move` INT UNSIGNED DEFAULT NULL,
+    `score` INT UNSIGNED DEFAULT NULL,
     `user_id` INT DEFAULT NULL,
     CONSTRAINT fk_user_game FOREIGN KEY (`user_id`)
         REFERENCES `user` (`id`),
