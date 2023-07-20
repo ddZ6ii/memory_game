@@ -1,4 +1,6 @@
-export default function MenuClose() {
+import PropTypes from "prop-types";
+
+export default function MenuClose({ customStyle }) {
   return (
     <svg
       width="24"
@@ -6,6 +8,7 @@ export default function MenuClose() {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={customStyle}
     >
       <path
         fillRule="evenodd"
@@ -16,3 +19,11 @@ export default function MenuClose() {
     </svg>
   );
 }
+
+MenuClose.propTypes = {
+  customStyle: PropTypes.string,
+};
+
+MenuClose.defaultProps = {
+  customStyle: "",
+};

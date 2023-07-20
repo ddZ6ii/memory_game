@@ -7,18 +7,54 @@ import { useAuthContext } from "../contexts/AuthContext";
 import * as Auth from "../services/auth";
 
 import SwitchMode from "./SwitchMode";
+import HomeIcon from "./utilities/HomeIcon";
+import SettingsIcon from "./utilities/SettingsIcon";
+import RulesIcon from "./utilities/RulesIcon";
+import StatsIcon from "./utilities/StatsIcon";
+import PreferencesIcon from "./utilities/PreferencesIcon";
 import LogInIcon from "./utilities/LogInIcon";
 import LogOutIcon from "./utilities/LogOutIcon";
 import MenuOpen from "./utilities/MenuOpen";
 import MenuClose from "./utilities/MenuClose";
-
-import navitems from "../data/navitems.json";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const { isDarkMode } = useThemeContext();
   const { isAuthenticated, clearAccount } = useAuthContext();
   const [isMenuOpened, setIsMenuOpened] = useState(false);
+
+  const navitems = [
+    {
+      id: 1,
+      name: "Home",
+      component: <HomeIcon />,
+      route: "",
+    },
+    {
+      id: 2,
+      name: "Settings",
+      component: <SettingsIcon />,
+      route: "/settings",
+    },
+    {
+      id: 3,
+      name: "Rules",
+      component: <RulesIcon />,
+      route: "/rules",
+    },
+    {
+      id: 4,
+      name: "Stats",
+      component: <StatsIcon />,
+      route: "/stats",
+    },
+    {
+      id: 5,
+      name: "Preferences",
+      component: <PreferencesIcon />,
+      route: "/preferences",
+    },
+  ];
 
   const toggleMenu = () => setIsMenuOpened((prev) => !prev);
 
@@ -63,7 +99,9 @@ export default function Navbar() {
                       isActive ? "navitem__isActive text-accent-default" : ""
                     }`
                   }
+                  onClick={toggleMenu}
                 >
+                  {navitem.component}
                   {navitem.name}
                 </NavLink>
               </li>

@@ -1,4 +1,6 @@
-export default function LogOutIcon() {
+import PropTypes from "prop-types";
+
+export default function LogInIcon({ customStyle }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,6 +8,7 @@ export default function LogOutIcon() {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
+      className={customStyle}
     >
       <g clipPath="url(#clip0_28_11)">
         <path
@@ -29,3 +32,11 @@ export default function LogOutIcon() {
     </svg>
   );
 }
+
+LogInIcon.propTypes = {
+  customStyle: PropTypes.string,
+};
+
+LogInIcon.defaultProps = {
+  customStyle: "",
+};

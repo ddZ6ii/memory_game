@@ -237,16 +237,15 @@
   min-width: 144px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   font-size: theme("fontSize.lg");
 }
 
 .navitem__isActive {
-  text-decoration: underline 1px;
   text-underline-offset: 8px;
 }
 
-.navitem__isActive svg > :nth-child(2) {
+.navitem__isActive svg path {
   fill: theme("colors.accent.default");
 }
 
