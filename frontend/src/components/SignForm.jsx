@@ -36,8 +36,8 @@ export default function SignForm() {
           handleChangeAccount(user);
           // re-direct to Game page
           setTimeout(() => {
-            navigate("game");
-          }, 2000);
+            navigate("/settings");
+          }, 1000);
         }
       }
 
@@ -149,7 +149,7 @@ export default function SignForm() {
           </button>
         </p>
         <button type="submit" className="btn btn__primary__default ml-auto">
-          {!isLogin ? "Create Account" : "Log in"}
+          {!isLogin ? "Create Account" : "Log In"}
         </button>
       </div>
     </form>

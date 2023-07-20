@@ -30,23 +30,6 @@
    Global Variables
 \* ______________________________________________________________________ */
 :root {
-  /* theme */
-  --color-accent-default: theme("colors.accent.default");
-  --color-accent-purple: theme("colors.accent.purple");
-  --color-accent-cyan: theme("colors.accent.cyan");
-  --color-accent-pink: theme("colors.accent.pink");
-  --color-neutral-default: theme("colors.neutral.default");
-  --color-neutral-darkest: theme("colors.neutral.darkest");
-  --color-neutral-dark: theme("colors.neutral.dark");
-  --color-neutral-light: theme("colors.neutral.light");
-  --color-neutral-lightest: theme("colors.neutral.lightest");
-  --color-status-success: theme("colors.status.success");
-  --color-status-success-light: theme("colors.status.successLight");
-  --color-status-error: theme("colors.status.error");
-  --color-status-error-dark: theme("colors.status.errorDark");
-  --color-status-error-light: theme("colors.status.errorLight");
-  --color-overlay: theme("colors.overlay");
-
   /* light/dark mode toggle switch */
   --switch-width: 56px;
   --switch-height: 24px;
@@ -66,7 +49,7 @@
 \* ______________________________________________________________________ */
 @layer base {
   body {
-    color: var(--color-neutral-darkest);
+    color: theme("colors.neutral.darkest");
     font-family: theme("fontFamily.sans");
     font-size: theme("fontSize.base");
   }
@@ -144,9 +127,9 @@
   }
 
   input {
-    border: 1px solid var(--color-neutral-default);
+    border: 1px solid theme("colors.neutral.default");
     border-radius: 100px;
-    color: var(--color-neutral-darkest);
+    color: theme("colors.neutral.darkest");
   }
 }
 
@@ -168,27 +151,33 @@
    Theme
 \* ______________________________________________________________________ */
 .theme__dark {
-  color: var(--color-neutral-lightest);
-  background-color: var(--color-neutral-darkest);
+  color: theme("colors.neutral.lightest");
+  background-color: theme("colors.neutral.darkest");
 }
 
 .theme__light {
-  color: var(--color-neutral-darkest);
-  background-color: var(--color-neutral-lightest);
+  color: theme("colors.neutral.darkest");
+  background-color: theme("colors.neutral.lightest");
 }
 
 .btn__secondary__default {
-  color: var(--color-neutral-darkest);
-  background-color: var(--color-neutral-default);
+  color: theme("colors.neutral.lightest");
+  background-color: theme("colors.neutral.default");
 }
 
 .btn__primary__default {
-  color: var(--color-neutral-lightest);
-  background-color: var(--color-accent-default);
+  color: theme("colors.neutral.lightest");
+  background-color: theme("colors.accent.default");
+  border: 1px solid transparent;
+  &:hover {
+    color: theme("colors.accent.default");
+    background-color: theme("colors.neutral.lightest");
+    border: 1px solid theme("colors.accent.default");
+  }
 }
 
 .primary__default {
-  color: var(--color-accent-default);
+  color: theme("colors.accent.default");
 }
 
 /* ______________________________________________________________________ *\
@@ -233,7 +222,7 @@
   align-items: center;
   gap: 32px;
 
-  color: var(--color-neutral-lightest);
+  color: theme("colors.neutral.lightest");
   @apply bg-overlay/[99%] backdrop-blur;
 
   transform: translateX(100%);
@@ -282,7 +271,7 @@
   height: var(--switch-height);
 
   cursor: pointer;
-  background-color: var(--color-neutral-default);
+  background-color: theme("colors.neutral.default");
   border-radius: calc(var(--switch-height) / 2);
   transition: 0.3s;
 }
@@ -301,7 +290,7 @@
   height: var(--slider-height);
   width: var(--slider-width);
   border-radius: calc(var(--slider-height) / 2);
-  background: var(--color-accent-default);
+  background: theme("colors.accent.default");
   transition: 0.3s;
 }
 
@@ -312,7 +301,7 @@
 .toggle:has(input[type="checkbox"]:checked):after {
   left: calc(var(--switch-width) - var(--slider-space));
   transform: translateX(-100%);
-  background-color: var(--color-overlay);
+  background-color: theme("colors.overlay");
   transition: 0.3s;
 }
 
@@ -345,11 +334,11 @@
 }
 
 .toggle__icon_light svg path {
-  stroke: var(--color-neutral-lightest);
+  stroke: theme("colors.neutral.lightest");
 }
 
 .toggle__icon_dark svg path {
-  stroke: var(--color-neutral-lightest);
+  stroke: theme("colors.neutral.lightest");
 }
 
 .toggle:has(input[type="checkbox"]:checked) .toggle__icon_light {
@@ -360,4 +349,61 @@
 .toggle:has(input[type="checkbox"]:checked) .toggle__icon_dark {
   opacity: 1;
   transition: 0.3s;
+}
+
+/* ______________________________________________________________________ *\
+   Components - Modal Game Settings
+\* ______________________________________________________________________ */
+.ant-modal-close {
+  display: none;
+}
+
+.modalSettings__group {
+  padding: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.modalSettings__label {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 1 1 0;
+
+  @apply rounded-full;
+  cursor: pointer;
+  background-color: theme("colors.neutral.default");
+}
+
+.modalSettings__label input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+
+.modalSettings__label:has(input[type="radio"]:checked) {
+  background-color: theme("colors.neutral.darkest");
+  color: theme("colors.neutral.lightest");
+}
+
+.modalSettings__label:has(input[type="radio"]:disabled) {
+  background-color: theme("colors.neutral.default");
+  color: theme("colors.neutral.dark");
+  cursor: default;
+}
+
+.modalSettings__label:has(input[type="radio"]:not(:disabled)):hover {
+  background-color: theme("colors.accent.default");
+  color: theme("colors.neutral.lightest");
+}
+
+.modalSettings__lock {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
