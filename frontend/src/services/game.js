@@ -8,4 +8,4 @@ const create = async (gameInfo) => {
   });
 };
 
-export default create;
+export { create };
