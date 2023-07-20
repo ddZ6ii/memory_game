@@ -32,7 +32,7 @@ const create = async (req, res) => {
     if (result.affectedRows === 0) {
       throw new Error("Game not added to database");
     }
-    return res.status(201).json({ id_game: result.insertId });
+    return res.status(201).json({ id: result.insertId });
   } catch (err) {
     console.error(err);
     return res

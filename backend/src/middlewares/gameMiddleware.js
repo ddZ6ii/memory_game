@@ -11,12 +11,7 @@ const checkForExistingGame = async (req, res, next) => {
     const [[game]] = await models.game.findDuplicate(req.body);
 
     if (game) {
-      return (
-        res
-          .status(200)
-          // .send("A game with the same settings already exists")
-          .json(game)
-      );
+      return res.status(200).json(game); // a game with the same settings already exists
     }
     return next();
   } catch (err) {
