@@ -1,4 +1,14 @@
 [
-  { "id": 1, "value": "numbers", "title": "Try to match pairs of numbers" },
-  { "id": 2, "value": "icons", "title": "Try to match pairs of icons" }
+  {
+    "id": 1,
+    "type": "numbers",
+    "value": 1,
+    "title": "Try to match pairs of numbers"
+  },
+  {
+    "id": 2,
+    "type": "icons",
+    "value": 2,
+    "title": "Try to match pairs of icons"
+  }
 ]

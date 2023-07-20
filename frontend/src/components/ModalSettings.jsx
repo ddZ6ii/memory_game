@@ -1,19 +1,58 @@
 import { Modal } from "antd";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
+import { useAuthContext } from "../contexts/AuthContext";
+import { useGameContext } from "../contexts/GameContext";
 
 import LockIcon from "./utilities/LockIcon";
 
+import * as GameSettings from "../services/gameSettings";
+import * as Game from "../services/game";
 import capitalizeText from "../helpers/capitalize";
 
 import modes from "../data/settingsModes.json";
-import players from "../data/settingsNumberOfPlayers.json";
 import gridSizes from "../data/settingsGridSize.json";
+import players from "../data/settingsNumberOfPlayers.json";
+import TOAST_DEFAULT_CONFIG from "../data/toastConfig.json";
 
 export default function ModalSettings() {
+  const navigate = useNavigate();
+  const {
+    userAccount: { id_user: userId },
+  } = useAuthContext();
+  const { handleChangeGame } = useGameContext();
+
   const modalOverlayStyle = { backgroundColor: "var(--color-overlay)" };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("submit");
+
+    try {
+      // retieve form data
+      const settings = {
+        mode: e.target.mode.value,
+        is_multiplayer: e.target.is_multiplayer.value,
+        grid_size: e.target.grid_size.value,
+      };
+      // create new game (if not already existing) and retrieve game ID from database response
+      const {
+        data: { id: settingsId },
+      } = await GameSettings.create(settings);
+      // create new user_game entry into database (store all user stats for current game)
+      const game = {
+        game_id: settingsId,
+        user_id: userId,
+      };
+      // store user-game ID into dedicated context
+      const { data: gameInfo } = await Game.create(game);
+      handleChangeGame(gameInfo);
+      // re-direct to game page
+      navigate("/game");
+    } catch (err) {
+      console.error(err);
+      toast.error(`${err.message}`, TOAST_DEFAULT_CONFIG);
+    }
   };
 
   return (
@@ -35,24 +74,25 @@ export default function ModalSettings() {
         <label htmlFor="#">
           Select Mode
           <div className="modalSettings__group">
-            {modes.map(({ value, id, title }, index) => {
+            {modes.map(({ id, type, value, title }, index) => {
               return (
                 <label
-                  key={`${value}-${id}`}
-                  htmlFor={value}
+                  key={`${type}-${id}`}
+                  htmlFor={type}
                   className="modalSettings__label"
                 >
                   <input
-                    id={value}
+                    id={type}
                     type="radio"
                     name="mode"
-                    data-attribute={value}
+                    data-attribute={type}
+                    value={value}
                     title={title}
                     defaultChecked={index === 0}
                     disabled={index !== 0}
                     required
                   />
-                  {capitalizeText(value)}
+                  {capitalizeText(type)}
                   {index !== 0 ? (
                     <LockIcon customStyle="modalSettings__lock" />
                   ) : null}
@@ -68,15 +108,15 @@ export default function ModalSettings() {
             {players.map(({ value, id }, index) => {
               return (
                 <label
-                  key={`${value}-${id}`}
-                  htmlFor={`${value}-player`}
+                  key={`player-${id}`}
+                  htmlFor={value}
                   className="modalSettings__label"
                 >
                   <input
-                    id={`${value}-player`}
+                    id={value}
                     type="radio"
                     name="is_multiplayer"
-                    data-attribute={value}
+                    value={value}
                     defaultChecked={index === 0}
                     disabled={index !== 0}
                     required
@@ -94,23 +134,24 @@ export default function ModalSettings() {
         <label htmlFor="#">
           Grid Size
           <div className="modalSettings__group">
-            {gridSizes.map(({ value, id }, index) => {
+            {gridSizes.map(({ id, type, value }, index) => {
               return (
                 <label
-                  key={`${value}-${id}`}
-                  htmlFor={`${value}-grid`}
+                  key={`${type}-${id}`}
+                  htmlFor={type}
                   className="modalSettings__label"
                 >
                   <input
-                    id={`${value}-grid`}
+                    id={type}
                     type="radio"
                     name="grid_size"
-                    data-attribute={value}
+                    data-attribute={type}
+                    value={value}
                     defaultChecked={index === 0}
                     disabled={index !== 0}
                     required
                   />
-                  {capitalizeText(value)}
+                  {capitalizeText(type)}
                   {index !== 0 ? (
                     <LockIcon customStyle="modalSettings__lock" />
                   ) : null}

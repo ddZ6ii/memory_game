@@ -2,11 +2,11 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-import { useThemeContext } from "../contexts/ThemeContext";
 import { useAuthContext } from "../contexts/AuthContext";
+import { useThemeContext } from "../contexts/ThemeContext";
 
-import capitalizeText from "../helpers/capitalize";
 import * as Auth from "../services/auth";
+import capitalizeText from "../helpers/capitalize";
 
 import TOAST_DEFAULT_CONFIG from "../data/toastConfig.json";
 
@@ -34,7 +34,7 @@ export default function SignForm() {
           });
           // update both user context and local storage
           handleChangeAccount(user);
-          // re-direct to Game page
+          // re-direct to game settings page
           setTimeout(() => {
             navigate("/settings");
           }, 1000);
@@ -73,7 +73,7 @@ export default function SignForm() {
     } catch (err) {
       console.error(err);
       const errorMessage = isLogin ? err?.response?.data : err.message;
-      toast.warn(`${errorMessage}`, TOAST_DEFAULT_CONFIG);
+      toast.error(`${errorMessage}`, TOAST_DEFAULT_CONFIG);
     }
   };
 
