@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 
-import useThemeContext from "./hooks/useThemeContext";
+import { useThemeContext } from "./contexts/ThemeContext";
 
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";

@@ -1,8 +1,8 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-import useThemeContext from "../hooks/useThemeContext";
-import useAuthContext from "../hooks/useAuthContext";
+import { useThemeContext } from "../contexts/ThemeContext";
+import { useAuthContext } from "../contexts/AuthContext";
 
 import * as Auth from "../services/auth";
 

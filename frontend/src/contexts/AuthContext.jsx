@@ -1,14 +1,26 @@
 import PropTypes from "prop-types";
 import {
   createContext,
+  useContext,
   useState,
   useEffect,
   useCallback,
   useMemo,
 } from "react";
 
+// Create context
 const AuthContext = createContext();
 
+// Consumer custom Hook
+const useAuthContext = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuthContext was used outside of its Provider!");
+  }
+  return context;
+};
+
+// Context provider
 function AuthContextProvider({ children }) {
   const [userAccount, setUserAccount] = useState({});
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -52,7 +64,7 @@ function AuthContextProvider({ children }) {
   );
 }
 
-export { AuthContext, AuthContextProvider };
+export { AuthContext, useAuthContext, AuthContextProvider };
 
 AuthContextProvider.propTypes = {
   children: PropTypes.oneOfType([

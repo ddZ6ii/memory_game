@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import useThemeContext from "../hooks/useThemeContext";
+import { useThemeContext } from "../contexts/ThemeContext";
 
 export default function Footer() {
   const { isDarkMode } = useThemeContext();

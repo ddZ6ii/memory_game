@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-import useThemeContext from "../hooks/useThemeContext";
+import { useThemeContext } from "../contexts/ThemeContext";
 
 import SwitchLightIcon from "./utilities/SwitchLightIcon";
 import SwitchDarkIcon from "./utilities/SwitchDarkIcon";

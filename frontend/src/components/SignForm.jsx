@@ -2,8 +2,8 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-import useThemeContext from "../hooks/useThemeContext";
-import useAuthContext from "../hooks/useAuthContext";
+import { useThemeContext } from "../contexts/ThemeContext";
+import { useAuthContext } from "../contexts/AuthContext";
 
 import capitalizeText from "../helpers/capitalize";
 import * as Auth from "../services/auth";
