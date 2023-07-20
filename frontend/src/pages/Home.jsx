@@ -1,5 +1,5 @@
-import SignForm from "../components/SignForm";
 import Footer from "../components/Footer";
+import SignForm from "../components/SignForm";
 
 export default function Home() {
   return (
