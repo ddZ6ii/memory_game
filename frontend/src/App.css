@@ -147,6 +147,7 @@
   justify-content: center;
   align-items: center;
 
+  border: 1px solid transparent;
   border-radius: 100px;
   text-align: center;
 }
@@ -167,6 +168,11 @@
 .btn__secondary__default {
   color: theme("colors.neutral.lightest");
   background-color: theme("colors.neutral.default");
+  &:hover {
+    color: theme("colors.neutral.default");
+    background-color: theme("colors.neutral.lightest");
+    border-color: theme("colors.neutral.default");
+  }
 }
 
 .btn__primary__default {
@@ -176,7 +182,7 @@
   &:hover {
     color: theme("colors.accent.default");
     background-color: theme("colors.neutral.lightest");
-    border: 1px solid theme("colors.accent.default");
+    border-color: theme("colors.accent.default");
   }
 }
 
@@ -356,7 +362,7 @@
 }
 
 /* ______________________________________________________________________ *\
-   Components - Modal Game Settings
+   Components - Modals Utilities
 \* ______________________________________________________________________ */
 .ant-modal-close {
   display: none;
@@ -367,6 +373,9 @@
   @apply bg-overlay/80;
 }
 
+/* ______________________________________________________________________ *\
+   Components - Modal Game Settings
+\* ______________________________________________________________________ */
 .modalSettings__group {
   padding: 8px 0;
 
@@ -429,6 +438,25 @@
   right: 0;
   & path {
     @apply fill-neutral-dark;
+  }
+}
+
+/* ______________________________________________________________________ *\
+   Components - Modal End Game
+\* ______________________________________________________________________ */
+.modal__item {
+  padding: 8px 16px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: theme("colors.neutral.light");
+  border-radius: 6px;
+
+  &.is__dark {
+    color: theme("colors.neutral.darkest");
+    background-color: theme("colors.neutral.light");
   }
 }
 

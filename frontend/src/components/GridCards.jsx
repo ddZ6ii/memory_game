@@ -7,7 +7,7 @@ import Card from "./Card";
 
 import * as Init from "../helpers/initGame";
 
-export default function GridCards({ incrementMoves, endGame }) {
+export default function GridCards({ incrementMoves, endGame, restartGame }) {
   const { gameInfo } = useGameContext();
 
   const [grid, setGrid] = useState(null);
@@ -46,7 +46,7 @@ export default function GridCards({ incrementMoves, endGame }) {
       setCards(Init.shuffleCardsNumbers(gridSize)); // shuffle cards
       setGrid(Init.findGridSize(gridSize)); // set CSS class based on grid size
     }
-  }, [gameInfo]);
+  }, [gameInfo, restartGame]);
 
   // compare selected cards
   useEffect(() => {
@@ -92,4 +92,9 @@ export default function GridCards({ incrementMoves, endGame }) {
 GridCards.propTypes = {
   incrementMoves: PropTypes.func.isRequired,
   endGame: PropTypes.func.isRequired,
+  restartGame: PropTypes.bool,
+};
+
+GridCards.defaultProps = {
+  restartGame: null,
 };

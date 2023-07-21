@@ -1,7 +1,10 @@
 import PropTypes from "prop-types";
+
 import { useThemeContext } from "../contexts/ThemeContext";
 
-export default function Stats({ moves }) {
+import Timer from "./Timer";
+
+export default function Stats({ moves, gameEnded, gameRestarted }) {
   const { isDarkMode } = useThemeContext();
 
   const darkTheme = isDarkMode ? "is__dark" : "";
@@ -9,8 +12,7 @@ export default function Stats({ moves }) {
   return (
     <div className="stats">
       <div className={`stats__item ${darkTheme}`}>
-        <h3 className="font-normal">Time</h3>
-        <span className="text-xl tracking-wider">01:35</span>
+        <Timer gameEnded={gameEnded} gameRestarted={gameRestarted} />
       </div>
       <div className={`stats__item ${darkTheme}`}>
         <h3 className="font-normal">Moves</h3>
@@ -22,4 +24,13 @@ export default function Stats({ moves }) {
 
 Stats.propTypes = {
   moves: PropTypes.number.isRequired,
+  // gameEnded: PropTypes.bool.isRequired,
+  // gameRestarted: PropTypes.bool.isRequired,
+  gameEnded: PropTypes.bool,
+  gameRestarted: PropTypes.bool,
+};
+
+Stats.defaultProps = {
+  gameEnded: null,
+  gameRestarted: null,
 };

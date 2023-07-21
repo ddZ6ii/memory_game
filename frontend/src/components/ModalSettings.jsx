@@ -25,11 +25,11 @@ export default function ModalSettings() {
   const { isDarkMode } = useThemeContext();
   const { handleChangeGame } = useGameContext();
 
+  const darkTheme = isDarkMode ? "is__dark" : "is__ligth";
   const modalStyle = isDarkMode ? "modalStyleDark" : "";
   const modalOverlayStyle = isDarkMode
     ? { backgroundColor: "var(--color-neutral-darkest)" }
     : { backgroundColor: "var(--color-neutral-ligth)" };
-  const darkTheme = isDarkMode ? "is__dark" : "is__ligth";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,6 +59,7 @@ export default function ModalSettings() {
         game_id: settingsId,
         user_id: userId,
         settings,
+        stats: {},
       };
       handleChangeGame(gameInfo);
       // re-direct to game page

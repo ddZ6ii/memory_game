@@ -31,9 +31,9 @@ export default function SignForm() {
             autoClose: 2000,
           });
           handleChangeAccount(user); // update both user context and local storage
-          setTimeout(() => {
-            navigate("/settings"); // re-direct to game settings page
-          }, 1000);
+          // setTimeout(() => {
+          navigate("/settings"); // re-direct to game settings page
+          // }, 1000);
         }
       }
 
