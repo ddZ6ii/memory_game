@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useAuthContext } from "../contexts/AuthContext";
 import { useGameContext } from "../contexts/GameContext";
+import { useThemeContext } from "../contexts/ThemeContext";
 
 import LockIcon from "./utilities/LockIcon";
 
@@ -21,9 +22,14 @@ export default function ModalSettings() {
   const {
     userAccount: { id_user: userId },
   } = useAuthContext();
+  const { isDarkMode } = useThemeContext();
   const { handleChangeGame } = useGameContext();
 
-  const modalOverlayStyle = { backgroundColor: "var(--color-overlay)" };
+  const darkTheme = isDarkMode ? "is__dark" : "is__ligth";
+  const modalStyle = isDarkMode ? "modalStyleDark" : "";
+  const modalOverlayStyle = isDarkMode
+    ? { backgroundColor: "var(--color-neutral-darkest)" }
+    : { backgroundColor: "var(--color-neutral-ligth)" };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,8 +50,17 @@ export default function ModalSettings() {
         game_id: settingsId,
         user_id: userId,
       };
-      // store user-game ID into dedicated context
-      const { data: gameInfo } = await Game.create(game);
+      const {
+        data: { id: userGameId },
+      } = await Game.create(game);
+      // store game info into dedicated context
+      const gameInfo = {
+        id: userGameId,
+        game_id: settingsId,
+        user_id: userId,
+        settings,
+        stats: {},
+      };
       handleChangeGame(gameInfo);
       // re-direct to game page
       navigate("/game");
@@ -62,11 +77,12 @@ export default function ModalSettings() {
       onOk={handleSubmit}
       destroyOnClose
       footer={null}
-      maskStyle={modalOverlayStyle}
       zIndex={10}
+      wrapClassName={modalStyle}
+      maskStyle={modalOverlayStyle}
     >
       <form
-        className=" flex w-full max-w-2xl flex-col gap-6 self-center px-2 py-4"
+        className="flex w-full max-w-2xl flex-col gap-6 self-center"
         onSubmit={handleSubmit}
       >
         <h3>Game Settings</h3>
@@ -79,7 +95,7 @@ export default function ModalSettings() {
                 <label
                   key={`${type}-${id}`}
                   htmlFor={type}
-                  className="modalSettings__label"
+                  className={`modalSettings__label ${darkTheme}`}
                 >
                   <input
                     id={type}
@@ -110,7 +126,7 @@ export default function ModalSettings() {
                 <label
                   key={`player-${id}`}
                   htmlFor={value}
-                  className="modalSettings__label"
+                  className={`modalSettings__label ${darkTheme}`}
                 >
                   <input
                     id={value}
@@ -139,7 +155,7 @@ export default function ModalSettings() {
                 <label
                   key={`${type}-${id}`}
                   htmlFor={type}
-                  className="modalSettings__label"
+                  className={`modalSettings__label ${darkTheme}`}
                 >
                   <input
                     id={type}

@@ -1,31 +1,43 @@
-/**
- * @description generic Card component
- * use @param classCSS to pass custom class as a props (CSS and/or Tailwind)
- * use @param styleCSS to pass custom style as a props (CSS only) like dynamic url for background-image (not working using Tailwind class)
- */
-
-// Packages
 import PropTypes from "prop-types";
 
-export default function Card({ children, classCSS, styleCSS }) {
+import { useThemeContext } from "../contexts/ThemeContext";
+
+export default function Card({ card, isFlipped, isDisabled, onCardPick }) {
+  const { isDarkMode } = useThemeContext();
+
+  const darkTheme = isDarkMode ? "is__dark" : "is__light";
+  const flipBackCard = isFlipped ? "is__flipped" : "";
+  const flipFrondCard = isFlipped ? "" : "is__flipped";
+
+  const handleCardPick = () => onCardPick(card);
+
   return (
-    <div className={classCSS} style={styleCSS}>
-      {children}
+    <div className="card">
+      <button
+        type="button"
+        className={`card__front ${darkTheme} ${flipFrondCard}`}
+      >
+        {card.value}
+      </button>
+      <button
+        type="button"
+        className={`card__back ${darkTheme} ${flipBackCard}`}
+        disabled={isDisabled}
+        onClick={handleCardPick}
+      >
+        {" "}
+      </button>{" "}
     </div>
   );
 }
 
 Card.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
-  classCSS: PropTypes.string,
-  styleCSS: PropTypes.shape({}),
-};
-
-Card.defaultProps = {
-  children: null,
-  classCSS: null,
-  styleCSS: null,
+  card: PropTypes.shape({
+    id: PropTypes.string,
+    value: PropTypes.number,
+    isMatched: PropTypes.bool,
+  }).isRequired,
+  isFlipped: PropTypes.bool.isRequired,
+  isDisabled: PropTypes.bool.isRequired,
+  onCardPick: PropTypes.func.isRequired,
 };

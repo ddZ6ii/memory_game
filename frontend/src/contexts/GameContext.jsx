@@ -22,28 +22,28 @@ const useGameContext = () => {
 
 // Context provider
 function GameContextProvider({ children }) {
-  const [currentGame, setCurrentGame] = useState({});
+  const [gameInfo, setGameInfo] = useState({});
 
   const LOCAL_STORAGE_KEY = "game";
 
-  const handleChangeGame = useCallback((gameinfo) => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(gameinfo));
-    setCurrentGame(gameinfo);
+  const handleChangeGame = useCallback((currentGameInfo) => {
+    setGameInfo(currentGameInfo);
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(currentGameInfo));
   }, []);
 
   // retrieve user info from local storage (if any)
   useEffect(() => {
     const storedGame = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (storedGame) setCurrentGame(JSON.parse(storedGame));
+    if (storedGame) setGameInfo(JSON.parse(storedGame));
   }, []);
 
   // memoize the full context value
   const contextValue = useMemo(
     () => ({
-      currentGame,
+      gameInfo,
       handleChangeGame,
     }),
-    [currentGame, handleChangeGame]
+    [gameInfo, handleChangeGame]
   );
 
   return (
