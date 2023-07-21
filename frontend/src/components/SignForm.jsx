@@ -20,23 +20,19 @@ export default function SignForm() {
     e.preventDefault();
     try {
       if (isLogin) {
-        // proceed to sign-in (check if account already exists)
         const credendtials = {
           email: e.target.email.value,
           password: e.target.password.value,
         };
-        const { data: user } = await Auth.login(credendtials);
-
+        const { data: user } = await Auth.login(credendtials); // proceed to sign-in (check if account already exists)
         if (Object.keys(user).length) {
           toast.success(`Welcome back ${capitalizeText(user.pseudo)}!`, {
             ...TOAST_DEFAULT_CONFIG,
             autoClose: 2000,
           });
-          // update both user context and local storage
-          handleChangeAccount(user);
-          // re-direct to game settings page
+          handleChangeAccount(user); // update both user context and local storage
           setTimeout(() => {
-            navigate("/settings");
+            navigate("/settings"); // re-direct to game settings page
           }, 1000);
         }
       }
@@ -47,13 +43,12 @@ export default function SignForm() {
         if (password !== confirmationPassword) {
           toast.warn(`Passwords do not match!`, TOAST_DEFAULT_CONFIG);
         } else {
-          // register new user to database
           const user = {
             pseudo: e.target.pseudo.value,
             email: e.target.email.value,
             password: e.target.password.value,
           };
-          const res = await Auth.register(user);
+          const res = await Auth.register(user); // register new user to database
 
           // account with same email already existing
           if (res?.status === 200) {
