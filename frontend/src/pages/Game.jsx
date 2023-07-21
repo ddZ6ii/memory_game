@@ -66,10 +66,6 @@ export default function Game() {
       />
 
       {hasGameEnded ? <ModalEndGame restartGame={handleRestartGame} /> : null}
-
-      <button type="button" onClick={handleRestartGame}>
-        Restart
-      </button>
     </section>
   );
 }
