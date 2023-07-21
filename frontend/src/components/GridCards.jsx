@@ -1,4 +1,4 @@
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 
 import { useGameContext } from "../contexts/GameContext";
@@ -7,15 +7,14 @@ import Card from "./Card";
 
 import * as Init from "../helpers/initGame";
 
-export default function GridCards() {
+export default function GridCards({ incrementMoves }) {
   const { gameInfo } = useGameContext();
 
   const [grid, setGrid] = useState(null);
   const [cards, setCards] = useState([]);
-
-  const [moves, setMoves] = useState(null);
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
+  const [isCardDisabled, setIsCardDisbaled] = useState(false);
 
   const handleChoice = (card) => {
     if (choiceOne) setChoiceTwo(card);
@@ -25,7 +24,7 @@ export default function GridCards() {
   const resetChoice = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
-    setMoves((prev) => prev + 1);
+    setIsCardDisbaled(false);
   };
 
   const setMatch = (choice) => {
@@ -39,7 +38,6 @@ export default function GridCards() {
 
   // initialize game
   useEffect(() => {
-    setMoves(0); // init number of moves
     if (Object.keys(gameInfo).length) {
       const {
         settings: { grid_size: gridSize },
@@ -52,10 +50,14 @@ export default function GridCards() {
   // compare selected cards
   useEffect(() => {
     if (choiceOne && choiceTwo) {
+      setIsCardDisbaled(true); // prevents flipping other cards
       const isMatched = choiceOne.value === choiceTwo.value;
-      if (!isMatched) setTimeout(() => resetChoice(), 700);
-      else {
+      if (!isMatched) {
+        incrementMoves();
+        setTimeout(() => resetChoice(), 1100);
+      } else {
         setMatch(choiceOne.value);
+        incrementMoves();
         resetChoice();
       }
     }
@@ -68,15 +70,20 @@ export default function GridCards() {
           <Card
             key={card.id}
             card={card}
-            isCardFlipped={
+            isFlipped={
               card === choiceOne || card === choiceTwo || card.isMatched
             }
+            isDisabled={isCardDisabled}
             onCardPick={handleChoice}
           />
         ))
       ) : (
-        <p>Loading...</p>
+        <p>Shuffling Cards...</p>
       )}
     </div>
   );
 }
+
+GridCards.propTypes = {
+  incrementMoves: PropTypes.func.isRequired,
+};

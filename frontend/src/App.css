@@ -457,7 +457,11 @@
   position: relative;
   width: 56px;
   height: 56px;
+
   @apply rounded-full;
+  perspective: 180px;
+  transform-style: preserve-3d;
+
   @media screen and (min-width: theme("screens.md")) {
     width: 80px;
     height: 80px;
@@ -469,18 +473,24 @@
   position: absolute;
   width: 100%;
   height: 100%;
+
   display: flex;
   justify-content: center;
   align-items: center;
   @apply rounded-full;
 
-  &.is__hidden {
-    display: none;
-  }
+  transition: transform ease-in 0.2s;
 }
 
 .card__front {
   font-size: theme("fontSize.lg");
+  transform: rotateY(0deg);
+  transition-delay: 0.2s;
+
+  &.is__flipped {
+    transform: rotateY(90deg);
+    transition-delay: 0s;
+  }
   &.is__dark {
     background-color: theme("colors.neutral.light");
     color: theme("colors.neutral.darkest");
@@ -495,6 +505,13 @@
 }
 
 .card__back {
+  transform: rotateY(0deg);
+  transition-delay: 0.2s;
+
+  &.is__flipped {
+    transform: rotateY(90deg);
+    transition-delay: 0s;
+  }
   &.is__dark {
     background-color: theme("colors.neutral.dark");
   }
@@ -502,16 +519,6 @@
     background-color: theme("colors.neutral.darkest");
   }
 }
-
-/* .card__front__light {
-  background-color: theme("colors.neutral.dark");
-  color: theme("colors.neutral.lightest");
-}
-
-.grid__back__light {
-  background-color: theme("colors.neutral.darkest");
-  color: theme("colors.neutral.lightest");
-} */
 
 /* ______________________________________________________________________ *\
    Components - Game Stats
