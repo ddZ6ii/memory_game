@@ -2,12 +2,12 @@ import PropTypes from "prop-types";
 
 import { useThemeContext } from "../contexts/ThemeContext";
 
-export default function Card({ card, isCardFlipped, onCardPick }) {
+export default function Card({ card, isFlipped, isDisabled, onCardPick }) {
   const { isDarkMode } = useThemeContext();
 
   const darkTheme = isDarkMode ? "is__dark" : "is__light";
-  const hideBackCard = isCardFlipped ? "is__hidden" : "";
-  const hideFrontCard = isCardFlipped ? "" : "is__hidden";
+  const flipBackCard = isFlipped ? "is__flipped" : "";
+  const flipFrondCard = isFlipped ? "" : "is__flipped";
 
   const handleCardPick = () => onCardPick(card);
 
@@ -15,13 +15,14 @@ export default function Card({ card, isCardFlipped, onCardPick }) {
     <div className="card">
       <button
         type="button"
-        className={`card__front ${darkTheme} ${hideFrontCard}`}
+        className={`card__front ${darkTheme} ${flipFrondCard}`}
       >
         {card.value}
       </button>
       <button
         type="button"
-        className={`card__back ${darkTheme} ${hideBackCard}`}
+        className={`card__back ${darkTheme} ${flipBackCard}`}
+        disabled={isDisabled}
         onClick={handleCardPick}
       >
         {" "}
@@ -36,6 +37,7 @@ Card.propTypes = {
     value: PropTypes.number,
     isMatched: PropTypes.bool,
   }).isRequired,
-  isCardFlipped: PropTypes.bool.isRequired,
+  isFlipped: PropTypes.bool.isRequired,
+  isDisabled: PropTypes.bool.isRequired,
   onCardPick: PropTypes.func.isRequired,
 };

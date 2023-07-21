@@ -1,6 +1,7 @@
+import PropTypes from "prop-types";
 import { useThemeContext } from "../contexts/ThemeContext";
 
-export default function Stats() {
+export default function Stats({ moves }) {
   const { isDarkMode } = useThemeContext();
 
   const darkTheme = isDarkMode ? "is__dark" : "";
@@ -13,8 +14,12 @@ export default function Stats() {
       </div>
       <div className={`stats__item ${darkTheme}`}>
         <h3 className="font-normal">Moves</h3>
-        <span className="text-xl tracking-wider">17</span>
+        <span className="text-xl tracking-wider">{moves}</span>
       </div>
     </div>
   );
 }
+
+Stats.propTypes = {
+  moves: PropTypes.bool.isRequired,
+};
