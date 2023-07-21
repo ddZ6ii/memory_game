@@ -21,5 +21,5 @@ export default function Stats({ moves }) {
 }
 
 Stats.propTypes = {
-  moves: PropTypes.bool.isRequired,
+  moves: PropTypes.number.isRequired,
 };

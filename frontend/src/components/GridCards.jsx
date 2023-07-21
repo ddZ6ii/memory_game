@@ -7,7 +7,7 @@ import Card from "./Card";
 
 import * as Init from "../helpers/initGame";
 
-export default function GridCards({ incrementMoves }) {
+export default function GridCards({ incrementMoves, endGame }) {
   const { gameInfo } = useGameContext();
 
   const [grid, setGrid] = useState(null);
@@ -22,6 +22,7 @@ export default function GridCards({ incrementMoves }) {
   };
 
   const resetChoice = () => {
+    incrementMoves();
     setChoiceOne(null);
     setChoiceTwo(null);
     setIsCardDisbaled(false);
@@ -51,17 +52,21 @@ export default function GridCards({ incrementMoves }) {
   useEffect(() => {
     if (choiceOne && choiceTwo) {
       setIsCardDisbaled(true); // prevents flipping other cards
-      const isMatched = choiceOne.value === choiceTwo.value;
-      if (!isMatched) {
-        incrementMoves();
-        setTimeout(() => resetChoice(), 1100);
-      } else {
+      const isMatched =
+        choiceOne.value === choiceTwo.value && choiceOne.id !== choiceTwo.id; // prevent double clicking on a card
+      if (!isMatched) setTimeout(() => resetChoice(), 800);
+      else {
         setMatch(choiceOne.value);
-        incrementMoves();
         resetChoice();
       }
     }
   }, [choiceOne, choiceTwo]);
+
+  // check for end game
+  useEffect(() => {
+    const hasGameEnded = cards.length && cards.every((card) => card.isMatched);
+    if (hasGameEnded) endGame();
+  }, [cards]);
 
   return (
     <div className={`card__grid ${grid ? `grid__layout__${grid}` : ""}`}>
@@ -86,4 +91,5 @@ export default function GridCards({ incrementMoves }) {
 
 GridCards.propTypes = {
   incrementMoves: PropTypes.func.isRequired,
+  endGame: PropTypes.func.isRequired,
 };
