@@ -5,22 +5,34 @@ class GameManager extends AbstractManager {
     super({ table: "game" });
   }
 
-  findAllWithFilters(sql, sqlDependencies) {
-    return this.database.query(sql, [sqlDependencies]);
+  add(body) {
+    const { mode, is_multiplayer: isMultiplayer, grid_size: gridSize } = body;
+    const SQL = `INSERT INTO ${this.table} 
+      (mode, is_multiplayer, grid_size) VALUES (?, ?, ?)`;
+    return this.database.query(SQL, [
+      mode || 1,
+      isMultiplayer || 1,
+      gridSize || 1,
+    ]);
+  }
+
+  findDuplicate(body) {
+    const { mode, is_multiplayer: isMultiplayer, grid_size: gridSize } = body;
+    return this.database.query(
+      `SELECT * FROM ${this.table} AS u 
+      WHERE mode = (?) 
+      AND is_multiplayer = (?)
+      AND grid_size = (?)`,
+      [mode, isMultiplayer, gridSize]
+    );
   }
 
   update(body, id) {
-    return this.database.query(
-      `UPDATE ${this.table} SET name = ?, thumbnail = ? WHERE id = ?`,
-      [body.name, body.thumbnail, id]
-    );
-  }
-
-  create(body) {
-    return this.database.query(
-      `INSERT INTO ${this.table} (name, thumbnail) VALUES (?, ?)`,
-      [body.name, body.thumbnail]
-    );
+    const { mode, is_multiplayer: isMultiplayer, grid_size: gridSize } = body;
+    const SQL = `UPDATE ${this.table} 
+      SET mode = ?, is_multiplayer = ?, grid_size = ?
+      WHERE id = ?`;
+    return this.database.query(SQL, [mode, isMultiplayer, gridSize, id]);
   }
 }
 

@@ -1,30 +1,25 @@
 const models = require("../models");
 
 /**
- * @desc check if game already exists prior adding it to database
+ * @desc checking if game (same config settings) exists prior adding it to the database
  */
 const checkForExistingGame = async (req, res, next) => {
   try {
     if (!Object.keys(req.body).length)
       return res.status(400).send("Bad request. Body cannot be empty...");
 
-    const [games] = await models.game.findAll();
+    const [[game]] = await models.game.findDuplicate(req.body);
 
-    if (!games.length) return res.status(404).send("No games found");
-
-    const match = games.find(
-      (game) => game.name.toLowerCase() === req.body.name.toLowerCase()
-    );
-
-    if (match) return res.status(409).send("Game already exists!");
-
+    if (game) {
+      return res.status(200).json(game); // a game with the same settings already exists
+    }
     return next();
   } catch (err) {
     console.error(err);
     return res
       .status(500)
       .send(
-        "oops...an error occured when checking for already existing game..."
+        "oops...an error occured when checking for already existing account..."
       );
   }
 };

@@ -1,28 +1,38 @@
 /** @type {import('tailwindcss').Config} */
+// eslint-disable-next-line import/no-extraneous-dependencies
+const plugin = require("tailwindcss/plugin");
+
 module.exports = {
   content: ["./src/**/*.{html,js,jsx}"],
   theme: {
     extend: {
       colors: {
-        primary: "#333375",
-        primaryDark: "#181634",
-        primaryLight: "#6263D5",
-        primaryLightest: "#9596FB",
-        neutral: "#AAAAAA",
-        neutralDark: "#6C6C6C",
-        neutralDarkest: "#1C1C29",
-        neutralLight: "#D9D9D9",
-        neutralLightest: "#F5F5F5",
-        success: "#29C04A",
-        successLight: "#E0FFE5",
-        error: "#F07472",
-        errorDark: "#EA3829",
-        errorLight: "#FFEBE7",
+        accent: {
+          default: "#fda214",
+          purple: "#6263d5",
+          cyan: "#6ff3f7",
+          pink: "#da81f7",
+        },
+        neutral: {
+          default: "#bccfd9",
+          darkest: "#182a39",
+          dark: "#7d7d7d",
+          light: "#f2f2f2",
+          lightest: "#fdfdfd",
+        },
+        status: {
+          success: "#29C04A",
+          successLight: "#E0FFE5",
+          error: "#F07472",
+          errorDark: "#EA3829",
+          errorLight: "#FFEBE7",
+        },
+        overlay: "#111",
       },
 
       fontFamily: {
-        sans: ["Lato", "sans-serif"],
-        header: ["Gilroy", "sans-serif"],
+        sans: ["Poppins", "sans-serif"],
+        header: ["Poppins", "sans-serif"],
       },
 
       fontSize: {
@@ -76,18 +86,25 @@ module.exports = {
           },
         ],
       },
-      backgroundImage: {
-        gradientPrimary: "linear-gradient(180deg, #9969c4 0%, #4e5db6 93.23%)",
-        gradientDarkTheme:
-          "linear-gradient(164.77deg, #0F152B 1.54%, #201940 76.34%)",
-      },
-      boxShadow: {
-        innerLight:
-          "inset 5px -5px 15px rgba(255, 255, 255, 0.3), inset 0px -5px 15px rgba(255, 255, 255, 0.3)",
-        innerDark:
-          "inset 5px -5px 15px rgba(0, 0, 0, 0.4), inset 0px -5px 15px rgba(255, 255, 255, 0.4)",
-      },
     },
-    plugins: [],
+    plugins: [
+      // eslint-disable-next-line func-names
+      plugin(function ({ addUtilities }) {
+        addUtilities({
+          ".my-rotate-180": {
+            transform: "rotateY(180deg)",
+          },
+          ".preserve-3d": {
+            transformStyle: "preserve-3d",
+          },
+          ".perspective": {
+            perspective: "1000px",
+          },
+          ".backface-hidden": {
+            backfaceVisibility: "hidden",
+          },
+        });
+      }),
+    ],
   },
 };

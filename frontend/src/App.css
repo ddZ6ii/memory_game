@@ -6,30 +6,46 @@
    Import Local Fonts
 \* ______________________________________________________________________ */
 @font-face {
-  font-family: "Gilroy";
-  font-weight: 800;
-  src: local("Gilroy-ExtraBold"),
-    url("../public/assets/font/Gilroy-ExtraBold.otf") format("opentype");
+  font-family: "Poppins";
+  font-weight: 900;
+  src: local("Poppins-Black"),
+    url("../public/assets/font/Poppins-Black.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "Gilroy";
+  font-family: "Poppins";
+  font-weight: 400;
+  src: local("Poppins-Regular"),
+    url("../public/assets/font/Poppins-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Poppins";
   font-weight: 300;
-  src: local("Gilroy-Light"),
-    url("../public/assets/font/Gilroy-Light.otf") format("opentype");
+  src: local("Poppins-Light"),
+    url("../public/assets/font/Poppins-Light.ttf") format("truetype");
 }
 
 /* ______________________________________________________________________ *\
-   Utilities
+   Global Variables
 \* ______________________________________________________________________ */
-.btn-default {
-  @apply flex items-center justify-center gap-3 rounded-full
-  border border-transparent bg-gradient-to-b from-[#4E5DB6]/95 to-[#9969C4]
-  px-7 py-2 text-center font-header text-xs font-extrabold text-neutralLightest;
-}
+:root {
+  --color-overlay: theme("colors.overlay");
+  --color-neutral-darkest: theme("colors.neutral.darkest");
+  --color-neutral-default: theme("colors.neutral.default");
 
-.btn-default:hover {
-  @apply border-primaryLight bg-neutralLightest bg-none text-primaryLight;
+  /* light/dark mode toggle switch */
+  --switch-width: 56px;
+  --switch-height: 24px;
+  --slider-space: 1px;
+  --icon-space: 1px;
+  --slider-height: calc(var(--switch-height) - calc(2 * var(--slider-space)));
+  --slider-width: var(--slider-height);
+  --slider-course: calc(
+    calc(var(--switch-width) - var(--slider-width)) - 2 * var(--slider-space)
+  );
+  --icon-height: calc(var(--slider-height) - 2 * var(--icon-space));
+  --icon-width: var(--icon-height);
 }
 
 /* ______________________________________________________________________ *\
@@ -37,16 +53,13 @@
 \* ______________________________________________________________________ */
 @layer base {
   body {
-    color: theme("colors.neutralLightest");
+    color: theme("colors.neutral.darkest");
     font-family: theme("fontFamily.sans");
     font-size: theme("fontSize.base");
   }
 
   section {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    padding: 80px 0 32px 0;
+    padding: 96px 0 32px 0;
     margin-inline: clamp(24px, 7.5vw, 192px);
 
     display: flex;
@@ -54,39 +67,509 @@
     gap: 32px;
 
     @media screen and (min-width: theme("screens.md")) {
-      padding-top: 32px;
+      margin-inline: clamp(64px, 7.5vw, 320px);
     }
 
     @media screen and (min-width: theme("screens.xl")) {
-      margin-inline: clamp(192px, 7.5vw, 288px);
-    }
-
-    @media screen and (min-width: theme("screens.2xl")) {
-      margin-inline: clamp(288px, 20vw, 576px);
+      margin-inline: clamp(96px, 20vw, 576px);
     }
   }
 
-  article {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    @media screen and (min-width: theme("screens.md")) {
-      gap: 16px;
-    }
+  h1,
+  h2,
+  h3 {
+    font-family: theme("fontFamily.header");
+  }
+
+  h1,
+  h3 {
+    font-weight: theme("fontWeight.bold");
   }
 
   h1 {
     font-size: theme("fontSize.xl");
-    font-family: theme("fontFamily.header");
-    font-weight: theme("fontWeight.extrabold");
-    text-transform: uppercase;
+    @media screen and (min-width: theme("screens.md")) {
+      font-size: theme("fontSize.2xl");
+    }
   }
 
-  p {
-    @apply font-sans text-sm md:text-base;
+  h2 {
+    font-size: theme("fontSize.lg");
+    @media screen and (min-width: theme("screens.md")) {
+      font-size: theme("fontSize.xl");
+    }
+  }
+
+  h3 {
+    font-size: theme("fontSize.base");
+    @media screen and (min-width: theme("screens.md")) {
+      font-size: theme("fontSize.lg");
+    }
+  }
+
+  p,
+  label,
+  input,
+  button {
+    font-size: theme("fontSize.sm");
+    font-family: theme("fontFamily.sans");
+    font-weight: theme("fontWeight.normal");
+    @media screen and (min-width: theme("screens.md")) {
+      font-size: theme("fontSize.base");
+    }
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  label:not(:has(.modalSettings__label)),
+  input {
+    padding: 8px 16px;
+  }
+
+  input {
+    border: 1px solid theme("colors.neutral.default");
+    border-radius: 100px;
+    color: theme("colors.neutral.darkest");
   }
 }
 
 /* ______________________________________________________________________ *\
-   Components
+   Utilities
 \* ______________________________________________________________________ */
+.btn {
+  padding: 0.6rem 2rem;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid transparent;
+  border-radius: 100px;
+  text-align: center;
+}
+
+/* ______________________________________________________________________ *\
+   Theme
+\* ______________________________________________________________________ */
+.theme__dark {
+  color: theme("colors.neutral.lightest");
+  background-color: theme("colors.neutral.darkest");
+}
+
+.theme__light {
+  color: theme("colors.neutral.darkest");
+  background-color: theme("colors.neutral.lightest");
+}
+
+.btn__secondary__default {
+  color: theme("colors.neutral.lightest");
+  background-color: theme("colors.neutral.default");
+  &:hover {
+    color: theme("colors.neutral.default");
+    background-color: theme("colors.neutral.lightest");
+    border-color: theme("colors.neutral.default");
+  }
+}
+
+.btn__primary__default {
+  color: theme("colors.neutral.lightest");
+  background-color: theme("colors.accent.default");
+  border: 1px solid transparent;
+  &:hover {
+    color: theme("colors.accent.default");
+    background-color: theme("colors.neutral.lightest");
+    border-color: theme("colors.accent.default");
+  }
+}
+
+.primary__default {
+  color: theme("colors.accent.default");
+}
+
+/* ______________________________________________________________________ *\
+   Components - Navbar
+\* ______________________________________________________________________ */
+.navbar {
+  position: fixed;
+  top: 16px;
+
+  padding-inline: clamp(24px, 7.5vw, 192px);
+
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  @apply backdrop-blur-[2px];
+  z-index: 20;
+
+  @media screen and (min-width: theme("screens.md")) {
+    padding-inline: clamp(64px, 7.5vw, 320px);
+  }
+
+  @media screen and (min-width: theme("screens.xl")) {
+    padding-inline: clamp(96px, 20vw, 576px);
+  }
+}
+
+.navlist {
+  position: fixed;
+  top: -16px;
+  right: 0;
+  padding-top: 16px;
+
+  min-height: 100dvh;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+
+  color: theme("colors.neutral.lightest");
+  @apply bg-overlay/[99%] backdrop-blur;
+
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.navlist__isOpen {
+  transform: translateX(0%);
+}
+
+.navitem {
+  min-width: 144px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: theme("fontSize.lg");
+}
+
+.navitem__isActive {
+  text-underline-offset: 8px;
+}
+
+.navitem__isActive svg path {
+  fill: theme("colors.accent.default");
+}
+
+.navbar__btn {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 20;
+}
+
+/* ______________________________________________________________________ *\
+   Components - Switch Dark/Ligth Mode
+\* ______________________________________________________________________ */
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: var(--switch-width);
+  height: var(--switch-height);
+
+  cursor: pointer;
+  background-color: theme("colors.neutral.lightest");
+  border-radius: calc(var(--switch-height) / 2);
+  outline: 1px solid theme("colors.neutral.darkest");
+  transition: 0.3s;
+}
+
+.toggle input {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
+.toggle:after {
+  position: absolute;
+  content: "";
+  top: var(--slider-space);
+  left: var(--slider-space);
+  height: var(--slider-height);
+  width: var(--slider-width);
+  border-radius: calc(var(--slider-height) / 2);
+  background: theme("colors.accent.default");
+  transition: 0.3s;
+}
+
+.toggle:hover:after {
+  width: 50%;
+}
+
+.toggle:has(input[type="checkbox"]:checked):after {
+  left: calc(var(--switch-width) - var(--slider-space));
+  transform: translateX(-100%);
+  background-color: theme("colors.overlay");
+  transition: 0.3s;
+}
+
+.toggle:has(input[type="checkbox"]:checked) {
+  transition: 0.3s;
+}
+
+.toggle__icon {
+  position: absolute;
+  top: calc(var(--slider-space) + var(--icon-space));
+  cursor: pointer;
+  z-index: 10;
+}
+
+.toggle__icon svg {
+  width: var(--icon-width);
+  height: var(--icon-height);
+}
+
+.toggle__icon_light {
+  left: calc(var(--slider-space) + var(--icon-space));
+  opacity: 1;
+  transition: 0.3s;
+}
+
+.toggle__icon_dark {
+  right: calc(var(--slider-space) + var(--icon-space));
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.toggle__icon_light svg path {
+  stroke: theme("colors.neutral.lightest");
+}
+
+.toggle__icon_dark svg path {
+  stroke: theme("colors.neutral.lightest");
+}
+
+.toggle:has(input[type="checkbox"]:checked) .toggle__icon_light {
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.toggle:has(input[type="checkbox"]:checked) .toggle__icon_dark {
+  opacity: 1;
+  transition: 0.3s;
+}
+
+/* ______________________________________________________________________ *\
+   Components - Modals Utilities
+\* ______________________________________________________________________ */
+.ant-modal-close {
+  display: none;
+}
+
+.modalStyleDark .ant-modal-content {
+  color: theme("colors.neutral.lightest");
+  @apply bg-overlay/80;
+}
+
+/* ______________________________________________________________________ *\
+   Components - Modal Game Settings
+\* ______________________________________________________________________ */
+.modalSettings__group {
+  padding: 8px 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  @media screen and (min-width: theme("screens.md")) {
+    gap: 32px;
+  }
+}
+
+.modalSettings__label {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 1 1 0;
+
+  @apply rounded-full;
+  cursor: pointer;
+  background-color: theme("colors.neutral.light");
+}
+
+.modalSettings__label input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+
+.modalSettings__label:has(input[type="radio"]:checked) {
+  background-color: theme("colors.neutral.darkest");
+  color: theme("colors.neutral.lightest");
+  &.is__dark {
+    background-color: theme("colors.neutral.light");
+    color: theme("colors.neutral.darkest");
+  }
+}
+
+.modalSettings__label:has(input[type="radio"]:disabled) {
+  background-color: theme("colors.neutral.light");
+  color: theme("colors.neutral.dark");
+  cursor: default;
+  &.is__dark {
+    color: theme("colors.neutral.dark");
+    @apply bg-neutral-darkest/50;
+  }
+}
+
+.modalSettings__label:has(input[type="radio"]:not(:disabled)):hover {
+  background-color: theme("colors.accent.default");
+  color: theme("colors.neutral.lightest");
+}
+
+.modalSettings__lock {
+  position: absolute;
+  top: 0;
+  right: 0;
+  & path {
+    @apply fill-neutral-dark;
+  }
+}
+
+/* ______________________________________________________________________ *\
+   Components - Modal End Game
+\* ______________________________________________________________________ */
+.modal__item {
+  padding: 8px 16px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: theme("colors.neutral.light");
+  border-radius: 6px;
+
+  &.is__dark {
+    color: theme("colors.neutral.darkest");
+    background-color: theme("colors.neutral.light");
+  }
+}
+
+/* ______________________________________________________________________ *\
+   Components - Cards Grid Layout
+\* ______________________________________________________________________ */
+.grid__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.card__grid {
+  display: grid;
+  justify-items: center;
+  gap: 32px;
+}
+
+.grid__layout__4 {
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 4;
+}
+
+.card {
+  position: relative;
+  width: 56px;
+  height: 56px;
+
+  @apply rounded-full;
+  perspective: 180px;
+  transform-style: preserve-3d;
+
+  @media screen and (min-width: theme("screens.md")) {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.card__front,
+.card__back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @apply rounded-full;
+
+  transition: transform ease-in 0.2s;
+}
+
+.card__front {
+  font-size: theme("fontSize.lg");
+  transform: rotateY(0deg);
+  transition-delay: 0.2s;
+
+  &.is__flipped {
+    transform: rotateY(90deg);
+    transition-delay: 0s;
+  }
+  &.is__dark {
+    background-color: theme("colors.neutral.light");
+    color: theme("colors.neutral.darkest");
+  }
+  &.is__light {
+    background-color: theme("colors.neutral.default");
+    color: theme("colors.neutral.lightest");
+  }
+  @media screen and (min-width: theme("screens.md")) {
+    font-size: theme("fontSize.2xl");
+  }
+}
+
+.card__back {
+  transform: rotateY(0deg);
+  transition-delay: 0.2s;
+
+  &.is__flipped {
+    transform: rotateY(90deg);
+    transition-delay: 0s;
+  }
+  &.is__dark {
+    background-color: theme("colors.neutral.dark");
+  }
+  &.is__light {
+    background-color: theme("colors.neutral.darkest");
+  }
+}
+
+/* ______________________________________________________________________ *\
+   Components - Game Stats
+\* ______________________________________________________________________ */
+.stats {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.stats__item {
+  padding: 8px 16px;
+
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+
+  background-color: theme("colors.neutral.light");
+  border-radius: 6px;
+  text-align: center;
+
+  &.is__dark {
+    color: theme("colors.neutral.lightest");
+    @apply bg-overlay/70;
+  }
+}
